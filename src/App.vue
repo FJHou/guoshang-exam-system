@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <Login></Login>
     <keep-alive>
       <router-view/>
     </keep-alive>
@@ -7,8 +8,13 @@
 </template>
 
 <script>
+import Login from 'components/login/login'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    Login
+  }
 }
 </script>
 

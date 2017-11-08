@@ -128,6 +128,7 @@ export default {
             content: content,
             onOk: () => {
               this.$Message.info('已退出')
+              window.location.reload()
             }
           })
           break
