@@ -12,7 +12,7 @@
         <div class="pannel-left">
           <div class="avatar-wrapper">
             <div class="avatar">
-              <img src="./default_userImg.png" width="100%">
+              <Icon type="person" size="60" style="line-height:80px"></Icon>
               <p class="name">name</p>
             </div>
 
@@ -20,17 +20,30 @@
           <ul class="route-wrapper">
             <router-link tag="li" class="route-button" to="/exam">
               <span class="route-text">我的考场</span>
-              <Icon type="chevron-right" size="22" style="line-height: 50px"></Icon>
+              <Icon type="chevron-right" size="22" class="icon-right"></Icon>
             </router-link>
             <router-link tag="li" class="route-button" to="/question">
               <span class="route-text">我的问卷</span>
-              <Icon type="chevron-right" size="22" style="line-height: 50px"></Icon>
+              <Icon type="chevron-right" size="22" class="icon-right"></Icon>
             </router-link>
             <router-link tag="li" class="route-button" to="/user">
               <span class="route-text">会员中心</span>
-              <Icon type="chevron-right" size="22" style="line-height: 50px"></Icon>
+              <Icon type="chevron-right" size="22" class="icon-right"></Icon>
+            </router-link>
+            <router-link tag="li" class="route-button" to="/setting">
+              <span class="route-text">设置</span>
+              <Icon type="chevron-right" size="22" class="icon-right"></Icon>
             </router-link>
           </ul>
+          <div class="logout-wrapper">
+            <Button
+              type="primary"
+              shape="circle"
+              size="large"
+              class="logout"
+              @click="logout">
+            退出登录</Button>
+          </div>
         </div>
         <div class="pannel-right" @click="pannelControl"></div>
       </div>
@@ -40,17 +53,20 @@
         <header class="e-head signIn-head">
           <span class="back" @click="signInControl"><Icon type="chevron-left" size="26" style="line-height: 50px"></Icon></span>
           <span class="text">国商控股考试系统</span>
+          <span class="back"></span>
         </header>
         <div class="signIn-content">
           <div class="clock-group">
-            <p class="clock-time">12:23:30</p>
-            <p class="clock-hint">请及时签到</p>
+            <p class="clock-time">
+              {{this.time.min}}:{{this.time.sec}}
+            </p>
+            <p class="clock-hint">请在规定的时间内签到</p>
             <div class="clock-img">
               <Icon type="clock" size="200"></Icon>
             </div>
           </div>
           <p class="button-wrapper">
-            <Button type="primary" shape="circle" size="large" style="width:60%;font-size: 16px">点击签到</Button>
+            <Button type="primary" shape="circle" size="large" style="width:60%;font-size: 16px" @click="signIn" :loading="signLoading">点击签到</Button>
           </p>
         </div>
       </div>
@@ -69,18 +85,91 @@ export default {
     return {
       togglePannel: false,
       toggleSignin: false,
-      questionList: 0
+      questionList: 0,
+      isSignIn: false,
+      time: {
+        min: '04',
+        sec: 59
+      },
+      signLoading: false
     }
   },
+  created () {
+
+  },
   methods: {
+    // 退出登陆
+    logout () {
+      this._instance('confirm', '确定退出吗')
+    },
+    // 左侧栏控制
     pannelControl () {
       this.togglePannel = !this.togglePannel
     },
+    // 右侧签到栏控制
     signInControl () {
       this.toggleSignin = !this.toggleSignin
+      // if (!this.isSignIn) {
+      //   return
+      // }
+      // setInterval(() => {
+      //   this.timeCount()
+      // }, 1000)
     },
+    // 签到
     signIn () {
-
+      this.signLoading = true
+      this._instance('success', '签到成功')
+    },
+    _instance (type, content) {
+      switch (type) {
+        case 'confirm':
+          this.$Modal.confirm({
+            content: content,
+            onOk: () => {
+              this.$Message.info('已退出')
+            }
+          })
+          break
+        case 'success':
+          this.$Modal.success({
+            content: content,
+            onOk: () => {
+              this.toggleSignin = false
+            }
+          })
+          this.signLoading = false
+          break
+        case 'warning':
+          this.$Modal.warning({
+            content: content
+          })
+          break
+        case 'error':
+          this.$Modal.error({
+            content: content
+          })
+          break
+      }
+    },
+    timeCount () {
+      // if (this.time.sec !== 0 && this.time.sec > 0) {
+      //   this.time.sec--
+      // } else if (this.time.min > 0 && this.time.min !== 0) {
+      //   Number(this.time.min)--
+      // }
+      // this.time.hour = this._padZero(this.)
+      // this.time.min = this._padZero(time.getMinutes())
+      // this.time.sec = this._padZero(time.getSeconds())
+    },
+    _padZero (s, n = 2) {
+      let len = s.toString().length
+      let num = s
+      while (len < n) {
+        num = '0' + s
+        len++
+      }
+      return num
     }
   }
 }
@@ -115,6 +204,7 @@ export default {
     width 100%
     height 100%
     .pannel-left
+      position relative
       flex 1
       background url('./userset_bg.png') center
       .avatar-wrapper
@@ -130,12 +220,14 @@ export default {
           right 0
           bottom 0
           margin auto
+          text-align center
           width 80px
           height 80px
           border-radius 50%
+          background-color: #282828
           // background url('./default_userImg.png') center/100%
         .name
-          margin-top 30px
+          margin-top 20px
           text-align center
           font-size 24px
           color $color-text
@@ -146,9 +238,27 @@ export default {
           height 50px
           line-height 50px
           color $color-text
+          &.router-link-active
+            background-color $color-theme
           .route-text
+            font-size 18px
             flex 1
             text-align left
+          .icon-right
+            line-height 50px
+      .logout-wrapper
+        position absolute
+        left 0
+        bottom 36px
+        width 100%
+        width 100%
+        text-align center
+        .logout
+          width 80%
+          height 40px
+          font-size 16px
+          background transparent
+          color $color-theme
     .pannel-right
       width 20%
       background-color transparent
@@ -171,17 +281,17 @@ export default {
       background-color #fff
       height 100%
       .clock-group
-        padding-top 40px
+        padding-top 45px
         text-align center
         .clock-time
           font-size 60px
         .clock-hint
-          margin-top 20px
-          font-size 20px
+          margin-top 12px
+          font-size 14px
         .clock-img
-          margin-top 30px
+          margin-top 40px
       .button-wrapper
-        margin-top 20px
+        margin-top 50px
         text-align center
   .r-slide-enter-active, .r-slide-leave-active
     transition all 0.3s linear
