@@ -2,7 +2,9 @@
   <div id="app">
     <Login></Login>
     <keep-alive>
-      <router-view/>
+      <transition name="fade" mode="out-in">
+        <router-view/>
+      </transition>
     </keep-alive>
   </div>
 </template>

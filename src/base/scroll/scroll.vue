@@ -26,13 +26,13 @@
         default: false
       }
     },
-    mounted() {
+    mounted () {
       setTimeout(() => {
         this._initScroll()
       }, 20)
     },
     methods: {
-      _initScroll() {
+      _initScroll () {
         if (!this.$refs.scroll) {
           return
         }
@@ -48,18 +48,18 @@
           })
         }
       },
-      refresh() {
+      refresh () {
         this.scroll && this.scroll.refresh()
       },
-      scrollTo() {
+      scrollTo () {
         this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
       },
-      scrollToElement() {
+      scrollToElement () {
         this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
       }
     },
     watch: {
-      data() {
+      data () {
         setTimeout(() => {
           this.refresh()
         }, 25)
