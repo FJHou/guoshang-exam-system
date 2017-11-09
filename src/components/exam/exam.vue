@@ -51,7 +51,9 @@
     <transition name="r-slide">
       <div class="signIn-pannel" v-show="toggleSignin">
         <header class="e-head signIn-head">
-          <span class="back" @click="signInControl"><Icon type="chevron-left" size="26" style="line-height: 50px"></Icon></span>
+          <span class="back" @click="signInControl">
+            <Icon type="chevron-left" size="26" style="line-height: 50px"></Icon>
+          </span>
           <span class="text">国商控股考试系统</span>
           <span class="back"></span>
         </header>
@@ -72,20 +74,20 @@
       </div>
     </transition>
     <div class="exam-wrapper">
-      <ul class="exam-list">
-        <li v-for="item in questionList" class="question"></li>
-      </ul>
+      <Examlist :data="questionData"></Examlist>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+import Examlist from 'components/examlist/examlist'
+
 export default {
   data () {
     return {
       togglePannel: false,
       toggleSignin: false,
-      questionList: 0,
+      questionData: [2, 3],
       isSignIn: false,
       time: {
         min: '04',
@@ -172,6 +174,9 @@ export default {
       }
       return num
     }
+  },
+  components: {
+    Examlist
   }
 }
 </script>
@@ -278,6 +283,8 @@ export default {
     .signIn-head
       display flex
       justify-content justify-content
+    .text
+      flex 1
     .signIn-content
       background-color #fff
       height 100%
@@ -288,7 +295,7 @@ export default {
           font-size 60px
         .clock-hint
           margin-top 12px
-          font-size 14px
+          font-size 18px
         .clock-img
           margin-top 40px
       .button-wrapper
@@ -303,5 +310,6 @@ export default {
     top 50px
     bottom 0
     width 100%
-    background-color #ddd
+    .question
+      display flex
 </style>
