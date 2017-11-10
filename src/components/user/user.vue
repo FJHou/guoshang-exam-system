@@ -1,8 +1,11 @@
 <template>
   <div class="user">
     <Ehead class="user-head" :isTransparent="true">
-      <div class="back" @click="back">
-        <Icon type="chevron-left" size="26" style="line-height: 50px"></Icon>
+      <div slot="left" class="left-slot">
+        <RouteBack></RouteBack>
+      </div>
+      <Icon type="chevron-left" size="26" style="line-height: 50px"></Icon>
+      <div class="right-slot">
       </div>
     </Ehead>
     <!--用户信息区-->
@@ -69,6 +72,7 @@
 
 <script type="text/ecmascript-6">
 import Ehead from 'base/head/head'
+import RouteBack from 'base/back/route-back'
 import Gap from 'base/gap/gap'
 
 export default {
@@ -129,6 +133,7 @@ export default {
   },
   components: {
     Ehead,
+    RouteBack,
     Gap
   }
 }

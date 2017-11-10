@@ -1,12 +1,18 @@
 <template>
   <div class="exam">
-    <div class="e-head">
-      <span class="left-slot" @click="pannelControl">
-        <Icon type="navicon-round" size="28" style="line-height: 50px"></Icon>
+<!--     <div class="e-head">
+      <span class="left-slot" >
+
       </span>
       <h3 class="title">国商控股考试系统</h3>
       <span class="right-slot" @click="signInControl">签到</span>
-    </div>
+    </div> -->
+    <Ehead :title="'国商控股考试系统'">
+      <div slot="left" class="left-slot" @click="pannelControl">
+        <Icon type="navicon-round" size="28" style="line-height: 50px"></Icon>
+      </div>
+      <div slot="right" class="right-slot" @click="signInControl">签到</div>
+    </Ehead>
     <transition name="slide">
       <div class="user-pannel" v-show="togglePannel">
         <div class="pannel-left">
@@ -49,13 +55,14 @@
     </transition>
     <transition name="r-slide">
       <div class="signIn-pannel" v-show="toggleSignin">
-        <header class="e-head signIn-head">
-          <span class="back" @click="signInControl">
-            <Icon type="chevron-left" size="26" style="line-height: 50px"></Icon>
-          </span>
-          <span class="text">国商控股考试系统</span>
-          <span class="back"></span>
-        </header>
+        <Ehead :title="'国商控股考试系统'">
+          <div slot="left" class="left-slot">
+            <span class="back" @click="signInControl">
+              <Icon type="chevron-left" size="26" style="line-height: 50px"></Icon>
+            </span>
+          </div>
+          <div slot="right" class="right-slot"></div>
+        </Ehead>
         <div class="signIn-content">
           <div class="clock-group">
             <p class="clock-time">
@@ -75,19 +82,23 @@
     <div class="exam-wrapper">
       <Examlist :data="questionData" @select="select"></Examlist>
     </div>
-    <router-view></router-view>
+    <transition name="notice-slide">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import Examlist from 'components/examlist/examlist'
+import Ehead from 'base/head/head'
+import RouteBack from 'base/back/route-back'
 
 export default {
   data () {
     return {
       togglePannel: false,
       toggleSignin: false,
-      questionData: [2, 3],
+      questionData: [2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       isSignIn: false,
       time: {
         min: '04',
@@ -182,7 +193,9 @@ export default {
     }
   },
   components: {
-    Examlist
+    Examlist,
+    RouteBack,
+    Ehead
   }
 }
 </script>
@@ -191,22 +204,6 @@ export default {
 @import '~common/stylus/variable'
 .exam
   height 100%
-  .e-head
-    display flex
-    font-size 16px
-    height 50px
-    line-height 50px
-    text-align center
-    color $color-text
-    background-color $color-theme
-    .back
-      width 50px
-    .title
-      flex 1
-    .left-slot
-      flex 0 0 50px
-    .right-slot
-      flex 0 0 50px
   .user-pannel
     display flex
     position fixed
@@ -318,4 +315,8 @@ export default {
     width 100%
     .question
       display flex
+  .notice-slide-enter-active, .notice-slide-leave-active
+    transition all 0.3s linear
+  .notice-slide-enter, .notice-slide-leave-active
+    transform translate3d(100%,0,0)
 </style>

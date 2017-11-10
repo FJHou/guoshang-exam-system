@@ -48,6 +48,10 @@ export default {
 
 <style lang="stylus">
 .exam-list
+  position relative
+  width 100%
+  height 100%
+  overflow hidden
   .question
     padding 12px 12px 15px
     display flex
