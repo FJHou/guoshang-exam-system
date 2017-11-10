@@ -1,15 +1,47 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Exam from 'components/exam/Exam'
-import Question from 'components/question/question'
-import User from 'components/user/user'
-// import Notice from 'components/notice/notice'
+
+const Exam = (resolve) => {
+  import('components/exam/exam').then((module) => {
+    resolve(module)
+  })
+}
+
+const Question = (resolve) => {
+  import('components/question/question').then((module) => {
+    resolve(module)
+  })
+}
+
+const User = (resolve) => {
+  import('components/user/user').then((module) => {
+    resolve(module)
+  })
+}
 
 const Notice = (resolve) => {
   import('components/notice/notice').then((module) => {
     resolve(module)
   })
 }
+
+const ExamRoom = (resolve) => {
+  import('components/examroom/examroom').then((module) => {
+    resolve(module)
+  })
+}
+
+// const Exam = () => {
+//   import('components/exam/exam').then((module) => {
+//     resolve(module)
+//   })
+// }
+
+// const Exam = () => {
+//   import('components/exam/exam').then((module) => {
+//     resolve(module)
+//   })
+// }
 
 Vue.use(Router)
 
@@ -27,6 +59,10 @@ export default new Router({
         {
           path: 'notice',
           component: Notice
+        },
+        {
+          path: 'examroom',
+          component: ExamRoom
         }
       ]
     },
