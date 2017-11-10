@@ -19,6 +19,9 @@ export default {
       default: ''
     }
   },
+  mounted () {
+
+  },
   computed: {
     titleColor () {
 
@@ -42,12 +45,23 @@ export default {
     background-color $color-theme
     &.transparent
       background-color transparent
-    .back
-      width 50px
     .title
       flex 1
     .left-slot
+      position absolute
+      left 0
+      top 0
+      padding-left 20px
+      padding-right 10px
+      // width 50px
+      height 100%
       flex 0 0 50px
     .right-slot
+      position absolute
+      right 0
+      top 0
+      padding-right 10px
+      min-width 50px
+      height 100%
       flex 0 0 50px
 </style>
