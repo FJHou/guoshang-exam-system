@@ -6,7 +6,7 @@
     class="exam-list"
   >
     <ul>
-      <li v-for="item in data" class="question">
+      <li v-for="item in data" class="question" @click="selectItem(item)">
         <span class="exam-icon">
           <Icon type="document-text" class="document-text"></Icon>
         </span>
@@ -29,6 +29,11 @@ export default {
     data: {
       type: Array,
       default: null
+    }
+  },
+  methods: {
+    selectItem (e) {
+      this.$emit('select', e)
     }
   },
   created () {
@@ -65,10 +70,10 @@ export default {
     .exam-info
       flex 1
       .exam-name
-        font-size 14px
+        font-size 16px
         color #434343
       .exam-time
         margin-top 20px
-        font-size 12px
+        font-size 14px
         color #919191
 </style>

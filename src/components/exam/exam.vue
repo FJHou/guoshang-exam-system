@@ -15,7 +15,6 @@
               <Icon type="person" size="60" style="line-height:80px"></Icon>
               <p class="name">name</p>
             </div>
-
           </div>
           <ul class="route-wrapper">
             <router-link tag="li" class="route-button" to="/exam">
@@ -74,8 +73,9 @@
       </div>
     </transition>
     <div class="exam-wrapper">
-      <Examlist :data="questionData"></Examlist>
+      <Examlist :data="questionData" @select="select"></Examlist>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -100,6 +100,12 @@ export default {
 
   },
   methods: {
+    select (e) {
+      // console.log(e)
+      this.$router.push({
+        path: '/exam/notice'
+      })
+    },
     // 退出登陆
     logout () {
       this._instance('confirm', '确定退出吗')
@@ -269,7 +275,7 @@ export default {
       width 20%
       background-color transparent
   .slide-enter-active, .slide-leave-active
-    transition: all 0.3s linear
+    transition: all .3s linear
   .slide-enter, .slide-leave-active
     transform: translate3d(-100%,0,0)
   .signIn-pannel
@@ -302,7 +308,7 @@ export default {
         margin-top 50px
         text-align center
   .r-slide-enter-active, .r-slide-leave-active
-    transition all 0.3s linear
+    transition all .3s linear
   .r-slide-enter, .r-slide-leave-active
     transform translate3d(100%,0,0)
   .exam-wrapper
