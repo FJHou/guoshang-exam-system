@@ -7,13 +7,14 @@
         </div>
       </Ehead> -->
       <div class="anwser-status">
-        <h3>单选题</h3>
-        <div class="anwser-section">
-          <span class="question">1</span>
-          <span class="question">2</span>
-          <span class="question">3</span>
-          <span class="question">4</span>
-        </div>
+        <ul>
+          <li v-for="item in data" class="type-group">
+            <h3>{{item.type}}</h3>
+            <div class="anwser-section">
+              <span class="question" v-for="(options, index) in item.questions" :class="options.state ? 'fill' : ''">{{options.num}}</span>
+            </div>
+          </li>
+        </ul>
 <!--         <div class="send-paper-wrapper">
           <Button type="ghost" @click.native="sendPaper" class="send-btn">交卷</Button>
         </div> -->
@@ -28,9 +29,12 @@ import Ehead from 'base/head/head'
 export default {
   props: {
     data: {
-      type: Object,
-      default: {}
+      type: Array,
+      default: []
     }
+  },
+  mounted () {
+    console.log(this.data)
   },
   methods: {
     // sendPaper () {
@@ -54,7 +58,7 @@ export default {
     top 0
     left 0
     right 0
-    bottom 50px
+    bottom 0
     z-index 2
     // padding-top 50px
     background-color: rgba(55,55,55,.6)
@@ -69,9 +73,30 @@ export default {
       right 0
       width 100%
       background-color #fff
+      ul
+        padding 15px 15px 0
+        .type-group
+          .anwser-section
+            display flex
+            flex-wrap wrap
+            .question
+              margin-right 15px
+              margin-bottom 15px
+              width 30px
+              height 30px
+              text-align center
+              line-height 30px
+              border-radius 50%
+              box-shadow 1px 0 1px 0 #e1e1e1, 0 -1px 1px 0 #e1e1e1, -1px 0 1px 0 #e1e1e1, 0 1px 1px 0 #e1e1e1
+              &.fill
+                color #fff
+                background-color $color-theme
+                box-shadow none
       h3
+        padding-bottom 15px
         font-size 16px
         text-align center
+        color #434343
       .send-paper-wrapper
         position absolute
         bottom 14px

@@ -6,18 +6,58 @@
         </div>
         <div slot="right" class="right-slot"></div>
       </Ehead>
+<!--       <Scroll :data="data"
+              :probe-type="1"
+              class="question-content"> -->
       <div class="question-content">
+        <ul>
+          <li v-for="(item, index) in data" class="questions-item">
+            <ul>
+              <li  v-for="(questions, index) in item.questions">
+                <h3 class="question-title">
+                  <span class="question-type">{{item.type}}</span>
+                  <span class="question-number">第{{questions.num}}题</span>
+                </h3>
+                <div class="topic-wrapper">
+                  <p class="topic">{{questions.topic}}</p>
 
+                  <p class="option" v-for="(options, idx) in questions.options">{{options}}</p>
+                </div>
+                <!-- <h3 class="question-hint">[{{questions.type}}]请作答：</h3> -->
+                <div class="option-wrapper">
+                  <RadioGroup v-model="select" class="option-group" @on-change="selected">
+                      <!-- <Radio label="options[index]" size="large" class="radio" v-for="(options, index) in questions.options"></Radio> -->
+                      <Radio label="A" size="large" class="radio"></Radio>
+                      <Radio label="B" size="large" class="radio"></Radio>
+                      <Radio label="C" size="large" class="radio"></Radio>
+                      <Radio label="D" size="large" class="radio"></Radio>
+                  </RadioGroup>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
+      <!-- </Scroll> -->
       <footer>
-        <span class="drec-control pre">
+        <span class="drec-control pre" :class="toggleControlButton ? 'hidden' : ''">
           <Icon type="arrow-left-c"></Icon>
         </span>
         <span class="footer-btn-wrapper">
-          <Button type="primary" shape="circle" class="anwser-card-btn" @click.native="showAnwserCard">答题卡</Button>
-          <Button type="primary" shape="circle" class="send-paper" @click.native="sendPaperEvent">交卷</Button>
+          <Button
+            type="ghost"
+            shape="circle"
+            class="anwser-card-btn"
+            @click.native="showAnwserCard"
+            >答题卡</Button>
+          <Button
+            type="ghost"
+            shape="circle"
+            class="send-paper-btn"
+            @click.native="sendPaperEvent"
+            >交卷</Button>
         </span>
-        <span class="drec-control next">
+        <span class="drec-control next" :class="toggleControlButton ? 'hidden' : ''">
           <Icon type="arrow-right-c"></Icon>
         </span>
       </footer>
@@ -29,15 +69,95 @@
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
 import AnwserCard from 'components/anwsercard/anwsercard'
+import Scroll from 'base/scroll/scroll'
 
 export default {
   data () {
     return {
       toggleCard: false,
-      data: {a: 'b'}
+      toggleControlButton: false,
+      data: [
+        {
+          type: '单选题',
+          questions: [
+            {
+              num: 1,
+              topic: '哪一种不是水果',
+              state: true,
+              options: [
+                '香蕉',
+                '苹果',
+                '橘子',
+                '辣鸡'
+              ]
+            },
+            {
+              num: 2,
+              state: false,
+              topic: '哪一种不是水果',
+              options: [
+                '香蕉',
+                '苹果',
+                '橘子',
+                '辣鸡'
+              ]
+            },
+            {
+              num: 3,
+              state: true,
+              topic: '哪一种不是水果',
+              options: [
+                '香蕉',
+                '苹果',
+                '橘子',
+                '辣鸡'
+              ]
+            }
+          ],
+          totalCount: 10
+        }
+        // {
+        //   type: '多选题',
+        //   count: [
+        //     {
+        //       num: 1,
+        //       state: true
+        //     },
+        //     {
+        //       num: 2,
+        //       state: false
+        //     },
+        //     {
+        //       num: 3,
+        //       state: true
+        //     },
+        //     {
+        //       num: 4,
+        //       state: true
+        //     },
+        //     {
+        //       num: 5,
+        //       state: false
+        //     },
+        //     {
+        //       num: 6,
+        //       state: true
+        //     },
+        //     {
+        //       num: 7,
+        //       state: true
+        //     }
+        //   ],
+        //   totalCount: 10
+        // }
+      ],
+      select: ''
     }
   },
   methods: {
+    selected (me) {
+      console.log(me)
+    },
     sendPaperEvent () {
       this.$Modal.confirm({
         content: '<p>共有实体100题，已做。您确认交卷吗？</p> <p></p>',
@@ -54,6 +174,7 @@ export default {
     },
     showAnwserCard () {
       this.toggleCard = !this.toggleCard
+      this.toggleControlButton = !this.toggleControlButton
     },
     sendPaper () {
       // .then()
@@ -62,12 +183,14 @@ export default {
   components: {
     Ehead,
     RouteBack,
-    AnwserCard
+    AnwserCard,
+    Scroll
   }
 }
 </script>
 
 <style lang="stylus">
+@import '~common/stylus/variable'
 
 .exam-room
   position fixed
@@ -78,7 +201,48 @@ export default {
   z-index 2
   background-color #fff
   .question-content
-
+    position absolute
+    top 50px
+    bottom 50px
+    left 0
+    right 0
+    .question-title
+      padding 10px 15px
+      // height 30px
+      // line-height 30px
+      background-color #f8f8f8
+      box-shadow 0 1px 0 0 #e1e1e1
+      .question-type
+        padding 3px 5px
+        font-size 14px
+        border-radius 3px
+        background-color $color-theme
+        color #fff
+      .question-number
+        color #434343
+        margin-left 6px
+    .topic-wrapper
+      padding 10px 15px 30px
+      color #434343
+      font-size 16px
+      .option
+        padding-left 10px
+        margin-top 25px
+    .question-hint
+      padding 10px 15px
+      font-size 16px
+    .options-select
+      display flex
+      justify-content center
+    .option-wrapper
+      padding 0 10px
+      margin-top 20px
+      text-align center
+      .option-group
+        display flex
+        .radio
+          flex 1
+          text-align left
   footer
     display flex
     align-items center
@@ -92,10 +256,14 @@ export default {
     z-index 3
     box-shadow 0 1px 2px 1px #e1e1e1
     .footer-btn-wrapper
-      .anwser-card-btn, .send-paper
+
+      .anwser-card-btn, .send-paper-btn
+        color #2d8cf0
+        border-color #2d8cf0
+        font-size 14px
         width 70px
         height 33px
-      .send-paper
+      .send-paper-btn
         margin-left 10px
     .drec-control
       width 33px
@@ -106,4 +274,8 @@ export default {
       text-align center
       font-size 20px
       border-radius 50%
+      transition all .3s ease
+      &.hidden
+        // visibility hidden
+        opacity 0
 </style>
