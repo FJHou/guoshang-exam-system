@@ -28,6 +28,8 @@ module.exports = {
       'common': resolve('src/common'),
       'assets': resolve('src/assets'),
       'base': resolve('src/base'),
+      'api': resolve('src/api'),
+      'mock': resolve('src/mock'),
     }
   },
   module: {

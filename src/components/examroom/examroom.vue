@@ -116,40 +116,6 @@ export default {
           ],
           totalCount: 10
         }
-        // {
-        //   type: '多选题',
-        //   count: [
-        //     {
-        //       num: 1,
-        //       state: true
-        //     },
-        //     {
-        //       num: 2,
-        //       state: false
-        //     },
-        //     {
-        //       num: 3,
-        //       state: true
-        //     },
-        //     {
-        //       num: 4,
-        //       state: true
-        //     },
-        //     {
-        //       num: 5,
-        //       state: false
-        //     },
-        //     {
-        //       num: 6,
-        //       state: true
-        //     },
-        //     {
-        //       num: 7,
-        //       state: true
-        //     }
-        //   ],
-        //   totalCount: 10
-        // }
       ],
       select: ''
     }
