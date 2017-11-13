@@ -34,12 +34,19 @@ export default {
     }
   },
   mounted () {
-    console.log(this.data)
+    // console.log(this.data)
+    this.quiteSaveTime()
   },
   methods: {
     // sendPaper () {
     //   this.$emit('send')
     // }
+    quiteSaveTime () {
+      window.onbeforeunload = function () {
+        alert(1)
+        localStorage.setItem('time', new Date().getTime())
+      }
+    }
   },
   components: {
     Ehead
