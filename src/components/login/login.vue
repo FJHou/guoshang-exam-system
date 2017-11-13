@@ -25,7 +25,7 @@
         <p class="input-group password-group">
           <Icon type="locked" class="input-icon password-icon"></Icon>
           <input
-            type="text"
+            type="password"
             name="password-input"
             class="input password-input"
             placeholder="请输入密码"
@@ -45,6 +45,11 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {loginApi} from 'api/login/api-login'
+import loginMock from 'mock/mock'
+
+import {SUC_NUM} from 'common/js/util'
+
 export default {
   data () {
     return {
@@ -54,7 +59,13 @@ export default {
       loginSuccess: true
     }
   },
+  created () {
+    this.apiMock()
+  },
   methods: {
+    apiMock () {
+      loginMock()
+    },
     clear (e) {
       let name = e.target.className
       if (name.indexOf('password-delete') < 0) {
@@ -76,8 +87,21 @@ export default {
         })
         return
       }
-      this.loginLoading = true
-      this.loginSuccess = false
+      loginApi(this.userId, this.passWord).then((res) => {
+        if (res.res_num === SUC_NUM) {
+          this.$Message.success({
+            content: '登录成功'
+          })
+          this.loginLoading = true
+          this.loginSuccess = false
+        } else {
+          this.$Message.error({
+            content: res
+          })
+        }
+      })
+      // this.loginLoading = true
+      // this.loginSuccess = false
     }
   }
 }
