@@ -1,7 +1,13 @@
 import Mock from 'mockjs'
 
-export default function loginMock () {
-  Mock.mock('http://localhost:8080/a', {
+export function loginMock () {
+  Mock.mock('http://localhost:8080/login', {
     'res_num': 200
   })
 };
+
+export function examListMock () {
+  Mock.mock('http://localhost:8080/examList', {
+
+  })
+}

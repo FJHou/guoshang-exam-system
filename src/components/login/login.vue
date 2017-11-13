@@ -15,6 +15,7 @@
             name="userid-input"
             class="input userid-input"
             placeholder="请输入用户名"
+            autofocus="true"
             v-model="userId">
           <Icon
             type="ios-close"
@@ -46,7 +47,7 @@
 
 <script type="text/ecmascript-6">
 import {loginApi} from 'api/login/api-login'
-import loginMock from 'mock/mock'
+import {loginMock} from 'mock/mock'
 
 import {SUC_NUM} from 'common/js/util'
 

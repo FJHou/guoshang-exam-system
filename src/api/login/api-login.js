@@ -3,7 +3,7 @@ import axios from 'axios'
 export function loginApi (accout, password) {
   const _account = '123'
   const _password = '123'
-  const _url = 'http://localhost:8080/a'
+  const _url = 'http://localhost:8080/login'
   return axios.get(_url, {
     accout: accout,
     password: password
