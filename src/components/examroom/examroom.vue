@@ -4,39 +4,35 @@
         <div slot="left" class="left-slot">
           <RouteBack></RouteBack>
         </div>
-        <div slot="right" class="right-slot"></div>
+        <div slot="right" class="right-slot">{{CountDowntimer}}</div>
       </Ehead>
 <!--       <Scroll :data="data"
               :probe-type="1"
               class="question-content"> -->
-      <div class="question-content">
-        <ul>
-          <li v-for="(item, index) in data" class="questions-item">
-            <ul>
-              <li  v-for="(questions, index) in item.questions">
-                <h3 class="question-title">
-                  <span class="question-type">{{item.type}}</span>
-                  <span class="question-number">第{{questions.num}}题</span>
-                </h3>
-                <div class="topic-wrapper">
-                  <p class="topic">{{questions.topic}}</p>
+      <div class="question-content" ref="qutCotent">
+<!--         <ul>
+          <li  v-for="(questions, index) in item.questions">
+            <h3 class="question-title">
+              <span class="question-type">{{item.type}}</span>
+              <span class="question-number">第{{questions.num}}题</span>
+            </h3>
+            <div class="topic-wrapper">
+              <p class="topic">{{questions.topic}}</p>
 
-                  <p class="option" v-for="(options, idx) in questions.options">{{options}}</p>
-                </div>
-                <!-- <h3 class="question-hint">[{{questions.type}}]请作答：</h3> -->
-                <div class="option-wrapper">
-                  <RadioGroup v-model="select" class="option-group" @on-change="selected">
-                      <!-- <Radio label="options[index]" size="large" class="radio" v-for="(options, index) in questions.options"></Radio> -->
-                      <Radio label="A" size="large" class="radio"></Radio>
-                      <Radio label="B" size="large" class="radio"></Radio>
-                      <Radio label="C" size="large" class="radio"></Radio>
-                      <Radio label="D" size="large" class="radio"></Radio>
-                  </RadioGroup>
-                </div>
-              </li>
-            </ul>
+              <p class="option" v-for="(options, idx) in questions.options">{{options}}</p>
+            </div>
+            <h3 class="question-hint">[{{questions.type}}]请作答：</h3>
+            <div class="option-wrapper">
+              <RadioGroup v-model="select" class="option-group" @on-change="selected">
+                  <Radio label="options[index]" size="large" class="radio" v-for="(options, index) in questions.options"></Radio>
+                  <Radio label="A" size="large" class="radio"></Radio>
+                  <Radio label="B" size="large" class="radio"></Radio>
+                  <Radio label="C" size="large" class="radio"></Radio>
+                  <Radio label="D" size="large" class="radio"></Radio>
+              </RadioGroup>
+            </div>
           </li>
-        </ul>
+        </ul> -->
       </div>
       <!-- </Scroll> -->
       <footer>
@@ -70,10 +66,12 @@ import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
 import AnwserCard from 'components/anwsercard/anwsercard'
 import Scroll from 'base/scroll/scroll'
+import {CountDownTimer} from 'countdown-timer-js'
 
 export default {
   data () {
     return {
+      CountDowntimer: '',
       toggleCard: false,
       toggleControlButton: false,
       data: [
@@ -116,47 +114,26 @@ export default {
           ],
           totalCount: 10
         }
-        // {
-        //   type: '多选题',
-        //   count: [
-        //     {
-        //       num: 1,
-        //       state: true
-        //     },
-        //     {
-        //       num: 2,
-        //       state: false
-        //     },
-        //     {
-        //       num: 3,
-        //       state: true
-        //     },
-        //     {
-        //       num: 4,
-        //       state: true
-        //     },
-        //     {
-        //       num: 5,
-        //       state: false
-        //     },
-        //     {
-        //       num: 6,
-        //       state: true
-        //     },
-        //     {
-        //       num: 7,
-        //       state: true
-        //     }
-        //   ],
-        //   totalCount: 10
-        // }
       ],
       select: ''
     }
   },
+  mounted () {
+    // console.log(CountDownTimer)
+    this.setTime()
+  },
   methods: {
+    setTime () {
+      this.timer = new CountDownTimer('1:20:23', (times) => {
+        this.CountDowntimer = times
+        console.log(times)
+      })
+    },
     selected (me) {
       console.log(me)
+    },
+    _setQuetWidth () {
+
     },
     sendPaperEvent () {
       this.$Modal.confirm({
@@ -206,6 +183,10 @@ export default {
     bottom 50px
     left 0
     right 0
+    > ul
+      display flex
+      .questions-item
+        display flex
     .question-title
       padding 10px 15px
       // height 30px
