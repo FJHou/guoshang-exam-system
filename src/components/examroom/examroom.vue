@@ -126,7 +126,7 @@ export default {
     setTime () {
       this.timer = new CountDownTimer('1:20:23', (times) => {
         this.CountDowntimer = times
-        console.log(times)
+        // console.log(times)
       })
     },
     selected (me) {
