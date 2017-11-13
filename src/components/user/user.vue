@@ -51,6 +51,13 @@
         </div>
         <span>2017-10-01</span>
       </div>
+      <div class="mod-item" @click="modPassWord">
+        <div class="l-part">
+          <i class="mod-icon icon-pw"></i>
+          <p>修改密码</p>
+        </div>
+        <Icon type="ios-arrow-right" class="icon-right"></Icon>
+      </div>
       <Gap></Gap>
       <div class="mod-item bottom-line" @click="enterExam">
         <div class="l-part">
@@ -67,6 +74,24 @@
         <Icon type="ios-arrow-right" class="icon-right"></Icon>
       </div>
     </div>
+    <Modal
+        title="修改密码"
+        v-model="modifyPassWord"
+        :closable="false"
+        class-name="vertical-center-modal">
+        <p>
+          <span>旧密码</span>
+          <Input size="large" placeholder="请输入旧密码" type="password"></Input>
+        </p>
+        <p>
+          <span>新密码</span>
+          <Input size="large" placeholder="请输入新密码" type="password"></Input>
+        </p>
+        <p>
+          <span>重复密码</span>
+          <Input size="large" placeholder="请输入重复密码" type="password"></Input>
+        </p>
+    </Modal>
   </div>
 </template>
 
@@ -79,12 +104,16 @@ export default {
   data () {
     return {
       userName: '',
-      depName: ''
+      depName: '',   // 部门名称
+      modifyPassWord: false
     }
   },
   methods: {
     back () {
       history.back()
+    },
+    modPassWord () {
+      this.modifyPassWord = true
     },
     enterExam () {
       this.$router.push('exam')
@@ -229,6 +258,8 @@ export default {
           background-image url('./pep_test.png')
         .icon-question
           background-image url('./pep_tes.png')
+        .icon-pw
+          background-image url('./pep_pw.png')
         p
           margin-left 10px
       span, .icon-right
@@ -236,5 +267,4 @@ export default {
       .icon-right
         font-size 14px
       // .icon-right
-
 </style>

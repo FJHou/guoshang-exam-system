@@ -192,7 +192,6 @@ export default {
       let $qutList = this.$refs.qutList
       let itemArr = $qutList.children
       this.scrollLastIndex = itemArr.length - 1
-      // console.log('%c' + this.scrollLastIndex, 'color: red')
       let arr = []
       let clientWidth = $qutList.clientWidth
       let width = 0
