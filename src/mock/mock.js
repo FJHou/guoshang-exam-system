@@ -2,7 +2,9 @@ import Mock from 'mockjs'
 
 export function loginMock () {
   Mock.mock('http://localhost:8080/login', {
-    'res_num': 200
+    'code': 200,
+    'msg': '登录成功',
+    data: {}
   })
 };
 

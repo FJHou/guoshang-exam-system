@@ -35,10 +35,10 @@
               <span class="route-text">会员中心</span>
               <Icon type="chevron-right" size="22" class="icon-right"></Icon>
             </router-link>
-            <router-link tag="li" class="route-button" to="/setting">
+<!--             <router-link tag="li" class="route-button" to="/setting">
               <span class="route-text">设置</span>
               <Icon type="chevron-right" size="22" class="icon-right"></Icon>
-            </router-link>
+            </router-link> -->
           </ul>
           <div class="logout-wrapper">
             <Button
@@ -112,9 +112,11 @@ export default {
   },
   methods: {
     select (e) {
-      // console.log(e)
+      // this.$router.push({
+      //   path: '/exam/notice'
+      // })
       this.$router.push({
-        path: '/exam/notice'
+        path: '/exam/examgrade'
       })
     },
     // 退出登陆
@@ -128,12 +130,6 @@ export default {
     // 右侧签到栏控制
     signInControl () {
       this.toggleSignin = !this.toggleSignin
-      // if (!this.isSignIn) {
-      //   return
-      // }
-      // setInterval(() => {
-      //   this.timeCount()
-      // }, 1000)
     },
     // 签到
     signIn () {
@@ -171,25 +167,6 @@ export default {
           })
           break
       }
-    },
-    timeCount () {
-      // if (this.time.sec !== 0 && this.time.sec > 0) {
-      //   this.time.sec--
-      // } else if (this.time.min > 0 && this.time.min !== 0) {
-      //   Number(this.time.min)--
-      // }
-      // this.time.hour = this._padZero(this.)
-      // this.time.min = this._padZero(time.getMinutes())
-      // this.time.sec = this._padZero(time.getSeconds())
-    },
-    _padZero (s, n = 2) {
-      let len = s.toString().length
-      let num = s
-      while (len < n) {
-        num = '0' + s
-        len++
-      }
-      return num
     }
   },
   components: {

@@ -14,7 +14,7 @@
         <div class="avatar">
           <Icon type="person" size="60" style="line-height:80px;color:#d4d4d4"></Icon>
         </div>
-        <p class="name" @click="modifyName">{{userName}}</p>
+        <p class="name">{{userName}}</p>
       </div>
       <div class="user-joined-exam">
         <div class="join-item">
@@ -44,7 +44,7 @@
           <Icon type="ios-arrow-right" class="icon-right"></Icon>
         </div>
       </div>
-      <div class="mod-item">
+      <div class="mod-item bottom-line">
         <div class="l-part">
           <i class="mod-icon icon-date"></i>
           <p>注册日期</p>
@@ -75,22 +75,48 @@
       </div>
     </div>
     <Modal
-        title="修改密码"
         v-model="modifyPassWord"
         :closable="false"
+        :maskClosable="false"
+        :loading="loading"
+        @on-ok="sendNewPassword"
         class-name="vertical-center-modal">
         <p>
-          <span>旧密码</span>
+          <h5 class="modal-title" style="line-height: 12px; font-size: 14px; padding: 10px 0">旧密码</h5>
           <Input size="large" placeholder="请输入旧密码" type="password"></Input>
         </p>
         <p>
-          <span>新密码</span>
+          <h5 class="modal-title" style="line-height: 12px; font-size: 14px; padding: 10px 0">新密码</h5>
           <Input size="large" placeholder="请输入新密码" type="password"></Input>
         </p>
         <p>
-          <span>重复密码</span>
+          <h5 class="modal-title" style="line-height: 12px; font-size: 14px; padding: 10px 0">重复密码</h5>
           <Input size="large" placeholder="请输入重复密码" type="password"></Input>
         </p>
+    </Modal>
+    <Modal v-model="modifyDepName"
+           :closable="false"
+           :maskClosable="false"
+           :loading="loading"
+           @on-ok="sendDepName">
+        <Input  size="large"
+                placeholder="请输入部门名称"
+                type="text"
+                :autofocus=true
+                v-model="depName">
+        </Input>
+    </Modal>
+    <Modal v-model="modifyUserName"
+           :closable="false"
+           :maskClosable="false"
+           :loading="loading"
+           @on-ok="sendUserName">
+          <Input size="large"
+                 placeholder="请输姓名"
+                 type="text"
+                 :autofocus=true
+                 v-model="userName">
+          </Input>
     </Modal>
   </div>
 </template>
@@ -103,15 +129,36 @@ import Gap from 'base/gap/gap'
 export default {
   data () {
     return {
+      depName: '',
       userName: '',
-      depName: '',   // 部门名称
-      modifyPassWord: false
+      // modifyUserName: false,
+      modifyDepName: false,   // 部门名称
+      modifyPassWord: false,
+      loading: true
     }
   },
+  created () {
+
+  },
   methods: {
-    back () {
-      history.back()
+    sendNewPassword () {
+      setTimeout(() => {
+        this.modifyPassWord = false
+        this.$Message.success('修改成功')
+      }, 2000)
     },
+    sendDepName () {
+      setTimeout(() => {
+        this.modifyDepName = false
+        this.$Message.success('修改成功')
+      }, 2000)
+    },
+    // sendUserName () {
+    //   setTimeout(() => {
+    //     this.modifyUserName = false
+    //     this.$Message.success('修改成功')
+    //   }, 2000)
+    // },
     modPassWord () {
       this.modifyPassWord = true
     },
@@ -122,43 +169,11 @@ export default {
       this.$router.push('question')
     },
     modifyDepartment () {
-      this.$Modal.confirm({
-        render: (h) => {
-          return h('Input', {
-            props: {
-              value: this.depName,
-              autofocus: true,
-              placeholder: '请输入部门名称'
-            },
-            on: {
-              input: (val) => {
-                console.log(val)
-                this.depName = val
-              }
-            }
-          })
-        }
-      })
-    },
-    modifyName () {
-      this.$Modal.confirm({
-        render: (h) => {
-          return h('Input', {
-            props: {
-              value: this.userName,
-              autofocus: true,
-              placeholder: '请输入名称'
-            },
-            on: {
-              input: (val) => {
-                console.log(val)
-                this.userName = val
-              }
-            }
-          })
-        }
-      })
+      this.modifyDepName = true
     }
+    // modifyName () {
+    //   this.modifyUserName = true
+    // }
   },
   components: {
     Ehead,
@@ -193,6 +208,7 @@ export default {
       .name
         margin-top 10px
         font-size 20px
+        height 20px
     .user-joined-exam
       display flex
       margin-top 30px
@@ -267,4 +283,6 @@ export default {
       .icon-right
         font-size 14px
       // .icon-right
+  .modal-title
+    font-size 16px
 </style>

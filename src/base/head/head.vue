@@ -1,5 +1,5 @@
 <template>
-  <div class="e-head" :class="isTransparent ? 'transparent' : ''">
+  <div class="e-head" :class="isTransparent ? 'transparent' : ''" :style="styles" >
     <slot name="left"></slot>
     <h1 class="title">{{title}}</h1>
     <slot name="right"></slot>
@@ -14,18 +14,22 @@ export default {
       type: Boolean,
       default: false
     },
+    styles: {
+      type: String,
+      default: ''
+    },
     title: {
       type: String,
       default: ''
     }
   },
-  mounted () {
-
-  },
   computed: {
-    titleColor () {
-
+    getBgClr () {
+      return this.styles ? this.styles : ''
     }
+  },
+  mounted () {
+    console.log(this)
   }
 }
 </script>

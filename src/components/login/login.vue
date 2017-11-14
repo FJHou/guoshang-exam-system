@@ -89,15 +89,15 @@ export default {
         return
       }
       loginApi(this.userId, this.passWord).then((res) => {
-        if (res.res_num === SUC_NUM) {
+        if (res.code === SUC_NUM) {
           this.$Message.success({
-            content: '登录成功'
+            content: res.msg
           })
           this.loginLoading = true
           this.loginSuccess = false
         } else {
           this.$Message.error({
-            content: res
+            content: res.msg
           })
         }
       })

@@ -6,9 +6,6 @@
         </div>
         <div slot="right" class="right-slot">{{CountDowntimer}}</div>
       </Ehead>
-<!--       <Scroll :data="data"
-              :probe-type="1"
-              class="question-content"> -->
       <div class="question-content" ref="qutCotent">
         <ul ref="qutList">
           <li>
@@ -18,18 +15,14 @@
             </h3>
             <div class="topic-wrapper">
               <p class="topic">为啥</p>
-
-              <p class="option">啊啊啊</p>
+              <p class="option">A、啊啊啊</p>
+              <p class="option">B、啊啊啊</p>
+              <p class="option">C、啊啊啊</p>
+              <p class="option">D、啊啊啊</p>
             </div>
             <h3 class="question-hint">单选题</h3>
             <div class="option-wrapper">
-              <RadioGroup v-model="select" class="option-group" @on-change="selected">
-                 <!--  <Radio label="options[index]" size="large" class="radio" v-for="(options, index) in questions.options"></Radio> -->
-                  <Radio label="A" size="large" class="radio"></Radio>
-                  <Radio label="B" size="large" class="radio"></Radio>
-                  <Radio label="C" size="large" class="radio"></Radio>
-                  <Radio label="D" size="large" class="radio"></Radio>
-              </RadioGroup>
+              <OptionGroup @selected="selected"/>
             </div>
           </li>
           <li>
@@ -39,18 +32,11 @@
             </h3>
             <div class="topic-wrapper">
               <p class="topic">为啥</p>
-
               <p class="option">啊啊啊</p>
             </div>
             <h3 class="question-hint">单选题</h3>
             <div class="option-wrapper">
-              <RadioGroup v-model="select" class="option-group" @on-change="selected">
-                 <!--  <Radio label="options[index]" size="large" class="radio" v-for="(options, index) in questions.options"></Radio> -->
-                  <Radio label="A" size="large" class="radio"></Radio>
-                  <Radio label="B" size="large" class="radio"></Radio>
-                  <Radio label="C" size="large" class="radio"></Radio>
-                  <Radio label="D" size="large" class="radio"></Radio>
-              </RadioGroup>
+              <OptionGroup/>
             </div>
           </li>
           <li>
@@ -60,25 +46,18 @@
             </h3>
             <div class="topic-wrapper">
               <p class="topic">为啥</p>
-
               <p class="option">啊啊啊</p>
             </div>
             <h3 class="question-hint">单选题</h3>
             <div class="option-wrapper">
-              <RadioGroup v-model="select" class="option-group" @on-change="selected">
-                 <!--  <Radio label="options[index]" size="large" class="radio" v-for="(options, index) in questions.options"></Radio> -->
-                  <Radio label="A" size="large" class="radio"></Radio>
-                  <Radio label="B" size="large" class="radio"></Radio>
-                  <Radio label="C" size="large" class="radio"></Radio>
-                  <Radio label="D" size="large" class="radio"></Radio>
-              </RadioGroup>
+              <OptionGroup/>
             </div>
           </li>
         </ul>
       </div>
       <!-- </Scroll> -->
       <footer>
-        <transition name="fade" @afterLeave="afterLeave">
+        <transition name="fade">
           <span
             class="drec-control pre"
             :class="toggleCard ? 'hidden' : ''"
@@ -93,16 +72,16 @@
             shape="circle"
             class="anwser-card-btn"
             :class="toggleCard ? 'on' : ''"
-            @click.native="showAnwserCard"
+            @click.prevent="showAnwserCard"
             >答题卡</Button>
           <Button
             type="ghost"
             shape="circle"
             class="send-paper-btn"
-            @click.native="sendPaperEvent"
+            @click.prevent="sendPaperEvent"
             >交卷</Button>
         </span>
-        <transition name="fade" @afterLeave="afterLeave">
+        <transition name="fade">
           <span
             class="drec-control next"
             :class="toggleCard ? 'hidden' : ''"
@@ -113,6 +92,35 @@
       </transition>
       </footer>
       <AnwserCard :data="data" v-show="toggleCard"></AnwserCard>
+      <Modal v-model="shouldShowPaperModal"
+             :closable="false"
+             :maskClosable="false"
+             class-name="vertical-center-modal"
+             >
+        <p slot="header" style="color:#ff9900;text-align:center;border-bottom:none">
+            <Icon type="alert-circled"></Icon>
+            <span style="font-size:16px">你确定要交卷吗？</span>
+        </p>
+        <div style="text-align:center; font-size: 16px">
+            <p>共有试题100到，已做50道。您确定交卷吗？</p>
+            <p style="color:#ccc; font-size: 14px; padding-top: 10px">{{CountDowntimer}}</p>
+        </div>
+        <div slot="footer">
+          <div style="display: flex;justify-content: center">
+            <Button type="primary"
+                    size="large"
+                    :loading="loading"
+                    @click.prevent="confirmSendPaper">
+                  交卷</Button>
+            <Button type="ghost"
+                    size="large"
+                    style="margin-left: 40px"
+                    @click.prevent="shouldShowPaperModal = false">
+                  取消</Button>
+          </div>
+        </div>
+      </Modal>
+
   </div>
 </template>
 
@@ -120,6 +128,7 @@
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
 import AnwserCard from 'components/anwsercard/anwsercard'
+import OptionGroup from 'components/optiongroup/optiongroup'
 import Scroll from 'base/scroll/scroll'
 import {CountDownTimer} from 'countdown-timer-js'
 import BScroll from 'better-scroll'
@@ -134,48 +143,39 @@ export default {
       shouldShowLeft: false,
       shouldShowRight: true,
       data: [],
-      select: ''
-    }
-  },
-  computed: {
-    shouldHiddenLeftBtn () {
-      // return this.toggleLeftButton
+      loading: false,
+      shouldShowPaperModal: false,
+      modalLoading: false
     }
   },
   created () {
     this.canClick = true
   },
   mounted () {
-    // console.log(CountDownTimer)
     this.setTime()
     this._setQuetWidth()
     this._initSlider()
-    this._scrollEnd()
     this._scrollToggleButton()
   },
   methods: {
+    selected (e) {
+      console.log(e)
+    },
     setTime () {
-      this.timer = new CountDownTimer('1:20:23', (times) => {
+      this.timer = new CountDownTimer('1:30:00', (times) => {
         this.CountDowntimer = times
-        // console.log(times)
       })
     },
-    selected (me) {
-      // console.log(me)
+    confirmSendPaper () {
+      this.loading = true
+      setTimeout(() => {
+        this.shouldShowPaperModal = false
+        this.$Message.success('交卷成功')
+        this.loading = false
+      }, 2000)
     },
     sendPaperEvent () {
-      this.$Modal.confirm({
-        content: '<p>共有实体100题，已做。您确认交卷吗？</p> <p></p>',
-        okText: '交卷',
-        cancelText: '继续考试',
-        onOk: () => {
-          // this.sendPaper()  /* 发送考题 1*/
-          this.$Message.info('交卷成功')
-          this.$router.replace({
-            path: '/exam'
-          })
-        }
-      })
+      this.shouldShowPaperModal = true
     },
     showAnwserCard () {
       this.toggleCard = !this.toggleCard
@@ -183,10 +183,7 @@ export default {
       this.toggleLeftButton = !this.toggleLeftButton
     },
     sendPaper () {
-      // .then()
-    },
-    afterLeave () {
-      this.canClick = false
+
     },
     _setQuetWidth () {
       let $qutList = this.$refs.qutList
@@ -209,29 +206,38 @@ export default {
         scrollX: true,
         scrollY: false,
         momentum: false,
-        snap: true
+        snap: true,
+        probeType: 2,
+        click: true
       })
+      this._scrollEnd()
     },
     _pre () {
+      if (!this.canClick) {
+        return
+      }
+      this.canClick = false
       this.slider.prev()
-      this._getCurrentPage()
     },
     _next () {
+      if (!this.canClick) {
+        return
+      }
+      this.canClick = false
       this.slider.next()
-      this._getCurrentPage()
     },
     _scrollToggleButton () {
-      if (this.scrollCurrentIndex === this.scrollLastIndex) {
-      // 说明滚动到最后一题
-        this.shouldShowRight = false
-        this.shouldShowLeft = true
+      if (this.scrollCurrentIndex === 0) {
+        // 第一题
+        this.shouldShowLeft = false
+        this.shouldShowRight = true
         return
       }
 
-      if (this.scrollCurrentIndex === 0) {
-      // 第一题
-        this.shouldShowLeft = false
-        this.shouldShowRight = true
+      if (this.scrollCurrentIndex === this.scrollLastIndex) {
+        // 说明滚动到最后一题
+        this.shouldShowRight = false
+        this.shouldShowLeft = true
         return
       }
 
@@ -240,13 +246,17 @@ export default {
     },
     _getCurrentPage () {
       this.scrollCurrentIndex = this.slider.getCurrentPage().pageX
-      // console.log(typeof this.scrollCurrentIndex)
-      // console.log('%c scrollCurrentIndex = ' + this.scrollCurrentIndex, 'color: pink')
-      // console.log('%c scrollLastIndex = ' + this.scrollLastIndex, 'color: green')
     },
     _scrollEnd () {
-      this.slider.on('scrollEnd', () => {
+      this.slider.on('scrollEnd', (e) => {
+        this._getCurrentPage()
         this._scrollToggleButton()
+        this.canClick = true
+      })
+    },
+    _scroll () {
+      this.slider.on('scroll', (e) => {
+
       })
     }
   },
@@ -254,6 +264,7 @@ export default {
     Ehead,
     RouteBack,
     AnwserCard,
+    OptionGroup,
     Scroll
   }
 }
@@ -261,6 +272,21 @@ export default {
 
 <style lang="stylus">
 @import '~common/stylus/variable'
+
+// 自定义modal组件样式
+
+.ivu-modal-header
+  padding-bottom 0
+  border-bottom none
+.ivu-modal-footer
+  padding-top 0
+  border-top none
+.vertical-center-modal
+  display flex
+  align-items center
+  justify-content center
+  .ivu-modal
+    top 0
 
 .exam-room
   position fixed
@@ -283,8 +309,6 @@ export default {
         float left
     .question-title
       padding 10px 15px
-      // height 30px
-      // line-height 30px
       background-color #f8f8f8
       box-shadow 0 1px 0 0 #e1e1e1
       .question-type
@@ -306,18 +330,6 @@ export default {
     .question-hint
       padding 10px 15px
       font-size 16px
-    .options-select
-      display flex
-      justify-content center
-    .option-wrapper
-      padding 0 10px
-      margin-top 20px
-      text-align center
-      .option-group
-        display flex
-        .radio
-          flex 1
-          text-align left
   footer
     display flex
     align-items center
@@ -363,5 +375,4 @@ export default {
         right 15px
       &.hidden
         display none
-        // opacity 0
 </style>

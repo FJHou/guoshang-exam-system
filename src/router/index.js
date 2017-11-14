@@ -31,11 +31,11 @@ const ExamRoom = (resolve) => {
   })
 }
 
-// const Exam = () => {
-//   import('components/exam/exam').then((module) => {
-//     resolve(module)
-//   })
-// }
+const ExamGrade = (resolve) => {
+  import('components/examgrade/examgrade').then((module) => {
+    resolve(module)
+  })
+}
 
 // const Exam = () => {
 //   import('components/exam/exam').then((module) => {
@@ -63,6 +63,10 @@ export default new Router({
         {
           path: 'examroom',
           component: ExamRoom
+        },
+        {
+          path: 'examgrade',
+          component: ExamGrade
         }
       ]
     },

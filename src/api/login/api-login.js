@@ -11,7 +11,6 @@ export function loginApi (accout, password) {
     if (_account !== accout || _password !== password) {
       return Promise.resolve('账号或密码错误')
     }
-
     return Promise.resolve(res.data)
   }).catch((err) => {
     console.log(err)
