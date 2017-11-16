@@ -48,7 +48,38 @@
       </table>
     </div>
     <div class="btn-wrapper">
-      <Button type="primary" shape="circle" class="join-exam" @click.native="examRoom">进入考试</Button>
+      <Button type="primary"
+              shape="circle"
+              class="exam-state-btn"
+              @click.native="examRoom"
+              v-if="examState === 1">
+            进入考试</Button>
+      <div v-else-if="examState === 2" class="has-entered">
+            <Button type="primary"
+              shape="circle"
+              class="exam-state-btn"
+              @click.native="examRoom">
+            继续考试</Button>
+            <Button type="ghost"
+              shape="circle"
+              class="exam-state-btn"
+              @click.native="quitExam">
+            放弃考试</Button>
+      </div>
+
+      <Button type="primary"
+              shape="circle"
+              class="exam-state-btn"
+              disabled
+              v-else-if="examState === 3">
+            未到考试时间</Button>
+      <Button type="primary"
+              shape="circle"
+              class="exam-state-btn"
+              :class="examState === 4 ? 'check-grade' : ''"
+              @click.native="checkGrade"
+              v-else-if="examState === 4">
+            成绩查询</Button>
     </div>
   </div>
 </template>
@@ -65,7 +96,7 @@ export default {
   },
   data () {
     return {
-
+      examState: 2
     }
   },
   methods: {
@@ -73,6 +104,12 @@ export default {
       this.$router.replace({
         path: '/exam/examroom'
       })
+    },
+    checkGrade () {
+
+    },
+    quitExam () {
+
     }
   },
   components: {
@@ -131,7 +168,19 @@ export default {
   .btn-wrapper
     margin-top 28px
     text-align center
-    .join-exam
+    .exam-state-btn
       width 60%
       font-size 14px
+      &.check-grade
+        border-color #17ba99
+        background-color #17ba99
+    .has-entered
+      display flex
+      justify-content space-around
+      .exam-state-btn
+        width 40%
+        font-size 14px
+        &.check-grade
+          border-color #17ba99
+          background-color #17ba99
 </style>

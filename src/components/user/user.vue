@@ -97,8 +97,7 @@
     <Modal v-model="modifyDepName"
            :closable="false"
            :maskClosable="false"
-           :loading="loading"
-           @on-ok="sendDepName">
+           :loading="loading">
         <Input  size="large"
                 placeholder="请输入部门名称"
                 type="text"
@@ -106,18 +105,17 @@
                 v-model="depName">
         </Input>
     </Modal>
-    <Modal v-model="modifyUserName"
+<!--     <Modal v-model="modifyUserName"
            :closable="false"
            :maskClosable="false"
-           :loading="loading"
-           @on-ok="sendUserName">
+           :loading="loading">
           <Input size="large"
                  placeholder="请输姓名"
                  type="text"
                  :autofocus=true
                  v-model="userName">
           </Input>
-    </Modal>
+    </Modal> -->
   </div>
 </template>
 

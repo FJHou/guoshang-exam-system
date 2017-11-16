@@ -22,7 +22,7 @@
             </div>
             <h3 class="question-hint">单选题</h3>
             <div class="option-wrapper">
-              <OptionGroup @selected="selected"/>
+              <OptionGroup/>
             </div>
           </li>
           <li>
@@ -57,7 +57,7 @@
       </div>
       <!-- </Scroll> -->
       <footer>
-        <transition name="fade">
+        <!-- <transition name="fade"> -->
           <span
             class="drec-control pre"
             :class="toggleCard ? 'hidden' : ''"
@@ -65,7 +65,7 @@
             @click="_pre">
             <Icon type="arrow-left-c"></Icon>
           </span>
-        </transition>
+        <!-- </transition> -->
         <span class="footer-btn-wrapper">
           <Button
             type="ghost"
@@ -81,7 +81,7 @@
             @click.prevent="sendPaperEvent"
             >交卷</Button>
         </span>
-        <transition name="fade">
+        <!-- <transition name="fade"> -->
           <span
             class="drec-control next"
             :class="toggleCard ? 'hidden' : ''"
@@ -89,7 +89,7 @@
             @click="_next">
             <Icon type="arrow-right-c"></Icon>
           </span>
-      </transition>
+      <!-- </transition> -->
       </footer>
       <AnwserCard :data="data" v-show="toggleCard"></AnwserCard>
       <Modal v-model="shouldShowPaperModal"
@@ -125,6 +125,7 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {mapMutations} from 'vuex'
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
 import AnwserCard from 'components/anwsercard/anwsercard'
@@ -142,7 +143,22 @@ export default {
       toggleCard: false,
       shouldShowLeft: false,
       shouldShowRight: true,
-      data: [],
+      data: [
+        {
+          type: '单选题',
+          num: 1,
+          isSelect: false,
+          result: '',
+          isRight: false
+        },
+        {
+          type: '单选题',
+          num: 2,
+          isSelect: false,
+          result: '',
+          isRight: true
+        }
+      ],
       loading: false,
       shouldShowPaperModal: false,
       modalLoading: false
@@ -152,20 +168,19 @@ export default {
     this.canClick = true
   },
   mounted () {
+    this.setQuestions(this.data)
     this.setTime()
     this._setQuetWidth()
     this._initSlider()
     this._scrollToggleButton()
   },
   methods: {
-    selected (e) {
-      console.log(e)
-    },
     setTime () {
       this.timer = new CountDownTimer('1:30:00', (times) => {
         this.CountDowntimer = times
       })
     },
+    // 确认交卷
     confirmSendPaper () {
       this.loading = true
       setTimeout(() => {
@@ -181,9 +196,6 @@ export default {
       this.toggleCard = !this.toggleCard
       this.toggleRightButton = !this.toggleRightButton
       this.toggleLeftButton = !this.toggleLeftButton
-    },
-    sendPaper () {
-
     },
     _setQuetWidth () {
       let $qutList = this.$refs.qutList
@@ -252,13 +264,18 @@ export default {
         this._getCurrentPage()
         this._scrollToggleButton()
         this.canClick = true
+        this.setCurrentIndex(this.scrollCurrentIndex)
       })
     },
     _scroll () {
       this.slider.on('scroll', (e) => {
 
       })
-    }
+    },
+    ...mapMutations({
+      setCurrentIndex: 'SET_CURRENT_INDEX',
+      setQuestions: 'SET_QUESTIONS'
+    })
   },
   components: {
     Ehead,
@@ -273,7 +290,7 @@ export default {
 <style lang="stylus">
 @import '~common/stylus/variable'
 
-// 自定义modal组件样式
+// 自定义iview Modal组件样式
 
 .ivu-modal-header
   padding-bottom 0

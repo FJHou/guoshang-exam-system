@@ -11,7 +11,9 @@
           <li v-for="item in data" class="type-group">
             <h3>{{item.type}}</h3>
             <div class="anwser-section">
-              <span class="question" v-for="(options, index) in item.questions" :class="options.state ? 'fill' : ''">{{options.num}}</span>
+              <span class="question"
+                    v-for="item in data"
+                    :class="item.isSelect ? 'fill' : ''">{{item.num}}</span>
             </div>
           </li>
         </ul>
@@ -42,7 +44,6 @@ export default {
     // }
     quiteSaveTime () {
       window.onbeforeunload = function () {
-        alert(1)
         localStorage.setItem('time', new Date().getTime())
       }
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="e-head" :class="isTransparent ? 'transparent' : ''" :style="styles" >
+  <div class="e-head" :class="isTransparent ? 'transparent' : ''" :style="getBgClr" >
     <slot name="left"></slot>
     <h1 class="title">{{title}}</h1>
     <slot name="right"></slot>
@@ -29,7 +29,7 @@ export default {
     }
   },
   mounted () {
-    console.log(this)
+    // console.log(this)
   }
 }
 </script>

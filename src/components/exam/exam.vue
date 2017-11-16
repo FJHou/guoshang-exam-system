@@ -27,6 +27,10 @@
               <span class="route-text">我的考场</span>
               <Icon type="chevron-right" size="22" class="icon-right"></Icon>
             </router-link>
+<!--             <li class="route-button">
+              <span class="route-text">我的问卷</span>
+              <Icon type="chevron-right" size="22" class="icon-right"></Icon>
+            </li> -->
             <router-link tag="li" class="route-button" to="/question">
               <span class="route-text">我的问卷</span>
               <Icon type="chevron-right" size="22" class="icon-right"></Icon>
@@ -66,7 +70,7 @@
         <div class="signIn-content">
           <div class="clock-group">
             <p class="clock-time">
-              {{this.time.min}}:{{this.time.sec}}
+
             </p>
             <p class="clock-hint">请在规定的时间内签到</p>
             <div class="clock-img">
@@ -83,7 +87,9 @@
       <Examlist :data="questionData" @select="select"></Examlist>
     </div>
     <transition name="notice-slide">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </transition>
   </div>
 </template>
@@ -100,10 +106,6 @@ export default {
       toggleSignin: false,
       questionData: [2, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
       isSignIn: false,
-      time: {
-        min: '04',
-        sec: 59
-      },
       signLoading: false
     }
   },
@@ -112,12 +114,12 @@ export default {
   },
   methods: {
     select (e) {
-      // this.$router.push({
-      //   path: '/exam/notice'
-      // })
       this.$router.push({
-        path: '/exam/examgrade'
+        path: '/exam/notice'
       })
+      // this.$router.push({
+      //   path: '/exam/examgrade'
+      // })
     },
     // 退出登陆
     logout () {
