@@ -1,12 +1,5 @@
 <template>
   <div class="exam">
-<!--     <div class="e-head">
-      <span class="left-slot" >
-
-      </span>
-      <h3 class="title">国商控股考试系统</h3>
-      <span class="right-slot" @click="signInControl">签到</span>
-    </div> -->
     <Ehead :title="'国商控股考试系统'">
       <div slot="left" class="left-slot" @click="pannelControl">
         <Icon type="navicon-round" size="28" style="line-height: 50px"></Icon>

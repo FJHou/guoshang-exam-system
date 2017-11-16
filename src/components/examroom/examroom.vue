@@ -6,55 +6,39 @@
         </div>
         <div slot="right" class="right-slot">{{CountDowntimer}}</div>
       </Ehead>
-      <div class="question-content" ref="qutCotent">
-        <ul ref="qutList">
-          <li>
-            <h3 class="question-title">
-              <span class="question-type">单选题</span>
-              <span class="question-number">第1题</span>
-            </h3>
-            <div class="topic-wrapper">
-              <p class="topic">为啥</p>
-              <p class="option">A、啊啊啊</p>
-              <p class="option">B、啊啊啊</p>
-              <p class="option">C、啊啊啊</p>
-              <p class="option">D、啊啊啊</p>
-            </div>
-            <h3 class="question-hint">单选题</h3>
-            <div class="option-wrapper">
-              <OptionGroup/>
-            </div>
-          </li>
-          <li>
-            <h3 class="question-title">
-              <span class="question-type">单选题</span>
-              <span class="question-number">第2题</span>
-            </h3>
-            <div class="topic-wrapper">
-              <p class="topic">为啥</p>
-              <p class="option">啊啊啊</p>
-            </div>
-            <h3 class="question-hint">单选题</h3>
-            <div class="option-wrapper">
-              <OptionGroup/>
-            </div>
-          </li>
-          <li>
-            <h3 class="question-title">
-              <span class="question-type">单选题</span>
-              <span class="question-number">第3题</span>
-            </h3>
-            <div class="topic-wrapper">
-              <p class="topic">为啥</p>
-              <p class="option">啊啊啊</p>
-            </div>
-            <h3 class="question-hint">单选题</h3>
-            <div class="option-wrapper">
-              <OptionGroup/>
-            </div>
-          </li>
-        </ul>
-      </div>
+      <Slider class="question-content" ref="slider" @scrollEnd="scrollEnd">
+        <div>
+          <h3 class="question-title">
+            <span class="question-type">单选题</span>
+            <span class="question-number">第1题</span>
+          </h3>
+          <div class="topic-wrapper">
+            <p class="topic">为啥</p>
+            <p class="option">A、啊啊啊</p>
+            <p class="option">B、啊啊啊</p>
+            <p class="option">C、啊啊啊</p>
+            <p class="option">D、啊啊啊</p>
+          </div>
+          <h3 class="question-hint">单选题</h3>
+          <div class="option-wrapper">
+            <OptionGroup/>
+          </div>
+        </div>
+        <div>
+          <h3 class="question-title">
+            <span class="question-type">单选题</span>
+            <span class="question-number">第2题</span>
+          </h3>
+          <div class="topic-wrapper">
+            <p class="topic">为啥</p>
+            <p class="option">啊啊啊</p>
+          </div>
+          <h3 class="question-hint">单选题</h3>
+          <div class="option-wrapper">
+            <OptionGroup/>
+          </div>
+        </div>
+      </Slider>
       <!-- </Scroll> -->
       <footer>
         <!-- <transition name="fade"> -->
@@ -128,18 +112,19 @@
 import {mapMutations} from 'vuex'
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
+import Slider from 'base/slider/slider'
 import AnwserCard from 'components/anwsercard/anwsercard'
 import OptionGroup from 'components/optiongroup/optiongroup'
 import Scroll from 'base/scroll/scroll'
 import {CountDownTimer} from 'countdown-timer-js'
-import BScroll from 'better-scroll'
+// import BScroll from 'better-scroll'
 
 export default {
   data () {
     return {
       CountDowntimer: '',
       scrollCurrentIndex: 0,
-      scrollLastIndex: 0,
+      scrollLastIndex: 1,
       toggleCard: false,
       shouldShowLeft: false,
       shouldShowRight: true,
@@ -170,8 +155,8 @@ export default {
   mounted () {
     this.setQuestions(this.data)
     this.setTime()
-    this._setQuetWidth()
-    this._initSlider()
+    // this._setQuetWidth()
+    // this._initSlider()
     this._scrollToggleButton()
   },
   methods: {
@@ -197,46 +182,19 @@ export default {
       this.toggleRightButton = !this.toggleRightButton
       this.toggleLeftButton = !this.toggleLeftButton
     },
-    _setQuetWidth () {
-      let $qutList = this.$refs.qutList
-      let itemArr = $qutList.children
-      this.scrollLastIndex = itemArr.length - 1
-      let arr = []
-      let clientWidth = $qutList.clientWidth
-      let width = 0
-
-      arr.forEach.call(itemArr, (item, index) => {
-        item.classList.add('questions-item')
-        item.style.width = clientWidth + 'px'
-        width += clientWidth
-      })
-
-      $qutList.style.width = width + 'px'
-    },
-    _initSlider () {
-      this.slider = new BScroll(this.$refs.qutCotent, {
-        scrollX: true,
-        scrollY: false,
-        momentum: false,
-        snap: true,
-        probeType: 2,
-        click: true
-      })
-      this._scrollEnd()
-    },
     _pre () {
       if (!this.canClick) {
         return
       }
       this.canClick = false
-      this.slider.prev()
+      this.$refs.slider.prev()
     },
     _next () {
       if (!this.canClick) {
         return
       }
       this.canClick = false
-      this.slider.next()
+      this.$refs.slider.next()
     },
     _scrollToggleButton () {
       if (this.scrollCurrentIndex === 0) {
@@ -257,20 +215,13 @@ export default {
       this.shouldShowRight = true
     },
     _getCurrentPage () {
-      this.scrollCurrentIndex = this.slider.getCurrentPage().pageX
+      this.scrollCurrentIndex = this.$refs.slider.getCurrentPage().pageX
     },
-    _scrollEnd () {
-      this.slider.on('scrollEnd', (e) => {
-        this._getCurrentPage()
-        this._scrollToggleButton()
-        this.canClick = true
-        this.setCurrentIndex(this.scrollCurrentIndex)
-      })
-    },
-    _scroll () {
-      this.slider.on('scroll', (e) => {
-
-      })
+    scrollEnd () {
+      this._getCurrentPage()
+      this._scrollToggleButton()
+      this.canClick = true
+      this.setCurrentIndex(this.scrollCurrentIndex)
     },
     ...mapMutations({
       setCurrentIndex: 'SET_CURRENT_INDEX',
@@ -282,7 +233,8 @@ export default {
     RouteBack,
     AnwserCard,
     OptionGroup,
-    Scroll
+    Scroll,
+    Slider
   }
 }
 </script>
@@ -320,10 +272,6 @@ export default {
     left 0
     right 0
     overflow hidden
-    > ul
-      overflow hidden
-      .questions-item
-        float left
     .question-title
       padding 10px 15px
       background-color #f8f8f8
