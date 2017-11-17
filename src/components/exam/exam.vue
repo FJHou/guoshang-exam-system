@@ -91,6 +91,7 @@
 import Examlist from 'components/examlist/examlist'
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
+import {deleteCookie} from 'common/js/cookie'
 
 export default {
   data () {
@@ -138,6 +139,7 @@ export default {
             content: content,
             onOk: () => {
               this.$Message.info('已退出')
+              deleteCookie('isLogin')
               window.location.reload()
             }
           })

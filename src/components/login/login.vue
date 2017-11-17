@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="login" v-if="loginSuccess">
+    <div class="login" v-if="notLogin">
       <div class="logo-wrapper">
         <div class="logo-content">
           <img src="./logo2.png" class="logo">
@@ -48,8 +48,9 @@
 <script type="text/ecmascript-6">
 import {loginApi} from 'api/login/api-login'
 import {loginMock} from 'mock/mock'
+import {setCookie} from 'common/js/cookie'
 
-import {SUC_NUM} from 'common/js/util'
+import {SUC_NUM, checkLogin} from 'common/js/util'
 
 export default {
   data () {
@@ -57,10 +58,13 @@ export default {
       userId: '',
       passWord: '',
       loginLoading: false,
-      loginSuccess: true
+      notLogin: true
     }
   },
   created () {
+    if (checkLogin()) {
+      this.notLogin = false
+    }
     this.apiMock()
   },
   methods: {
@@ -93,8 +97,11 @@ export default {
           this.$Message.success({
             content: res.msg
           })
+
+          setCookie('isLogin', true)
+
           this.loginLoading = true
-          this.loginSuccess = false
+          this.notLogin = false
         } else {
           this.$Message.error({
             content: res.msg
@@ -102,7 +109,7 @@ export default {
         }
       })
       // this.loginLoading = true
-      // this.loginSuccess = false
+      // this.isLogin = false
     }
   }
 }
