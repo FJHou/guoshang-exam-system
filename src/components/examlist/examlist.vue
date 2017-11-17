@@ -2,7 +2,7 @@
   <Scroll
     :data="data"
     :probe-type="probeType"
-    :listen-scroll="listenScroll"
+    :listen-scroll="false"
     class="exam-list"
   >
     <ul>
@@ -38,7 +38,6 @@ export default {
   },
   created () {
     this.probeType = 3
-    this.listenScroll = true
   },
   components: {
     Scroll

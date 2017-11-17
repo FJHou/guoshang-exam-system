@@ -156,12 +156,12 @@ export default {
     this.setQuestions(this.data)
     this.setTime()
     // this._setQuetWidth()
-    // this._initSlider()
+    // this._initSlider()..
     this._scrollToggleButton()
   },
   methods: {
     setTime () {
-      this.timer = new CountDownTimer('1:30:00', (times) => {
+      this.timer = new CountDownTimer('00:00:60', (times) => {
         this.CountDowntimer = times
       })
     },
