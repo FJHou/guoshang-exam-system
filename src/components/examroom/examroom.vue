@@ -156,7 +156,7 @@ export default {
     this.setQuestions(this.data)
     this.setTime()
     // this._setQuetWidth()
-    // this._initSlider()..
+    // this._initSlider()...
     this._scrollToggleButton()
   },
   methods: {
