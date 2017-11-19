@@ -10,7 +10,7 @@ import 'common/stylus/index.styl'
 
 Vue.config.productionTip = false
 Vue.use(iView)
-// console.log(store)
+// console.log(store):::
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
