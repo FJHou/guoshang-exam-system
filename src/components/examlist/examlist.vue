@@ -23,6 +23,7 @@
 
 <script type="text/ecmascript-6">
 import Scroll from 'base/scroll/scroll'
+import {Icon} from 'iview'
 
 export default {
   props: {
@@ -40,7 +41,8 @@ export default {
     this.probeType = 3
   },
   components: {
-    Scroll
+    Scroll,
+    Icon
   }
 }
 </script>

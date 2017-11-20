@@ -3,11 +3,16 @@
 </template>
 
 <script type="text/ecmascript-6">
+import {Icon} from 'iview'
+
 export default {
   methods: {
     back () {
       this.$router.back()
     }
+  },
+  components: {
+    Icon
   }
 }
 </script>

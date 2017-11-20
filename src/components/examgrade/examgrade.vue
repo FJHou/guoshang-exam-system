@@ -52,6 +52,7 @@
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
 import Anwsercard from 'components/anwsercard/anwsercard'
+import {Button, Icon} from 'iview'
 
 export default {
   data () {
@@ -77,7 +78,9 @@ export default {
   components: {
     Ehead,
     RouteBack,
-    Anwsercard
+    Anwsercard,
+    Button,
+    Icon
   }
 }
 </script>
