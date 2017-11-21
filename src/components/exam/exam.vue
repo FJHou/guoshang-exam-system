@@ -88,11 +88,17 @@
 </template>
 
 <script type="text/ecmascript-6">
-import Examlist from 'components/examlist/examlist'
+// import Examlist from 'components/examlist/examlist'
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
 import {deleteCookie} from 'common/js/cookie'
 import {Button, Icon} from 'iview'
+
+const Examlist = (resolve) => {
+  import('components/examlist/examlist').then((module) => {
+    resolve(module)
+  })
+}
 
 export default {
   data () {
