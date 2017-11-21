@@ -87,7 +87,6 @@
 <script type="text/ecmascript-6">
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
-import {Button, Icon} from 'iview'
 
 export default {
   props: {
@@ -116,9 +115,7 @@ export default {
   },
   components: {
     Ehead,
-    RouteBack,
-    Icon,
-    Button
+    RouteBack
   }
 }
 </script>

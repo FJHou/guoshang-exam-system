@@ -37,12 +37,6 @@ const ExamGrade = (resolve) => {
   })
 }
 
-// const Exam = () => {
-//   import('components/exam/exam').then((module) => {
-//     resolve(module)
-//   })
-// }
-
 Vue.use(Router)
 
 export default new Router({

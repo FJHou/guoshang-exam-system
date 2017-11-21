@@ -13,7 +13,6 @@
 
 <script type="text/ecmascript-6">
 import { mapActions } from 'vuex'
-import {RadioGroup, Radio} from 'iview'
 
 export default {
   data () {
@@ -32,10 +31,6 @@ export default {
     ...mapActions([
       'setQuestionInfo'
     ])
-  },
-  components: {
-    RadioGroup,
-    Radio
   }
 }
 </script>

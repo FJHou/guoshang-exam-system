@@ -175,8 +175,7 @@ export default {
           font-size 22px
       // .password-group
     .login-btn-wrapper
-      position absolute
-      bottom 72px
+      margin-top 40px
       width 100%
       text-align center
 
