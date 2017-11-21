@@ -123,7 +123,6 @@
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
 import Gap from 'base/gap/gap'
-import {Icon, Modal, Input} from 'iview'
 
 export default {
   data () {
@@ -177,11 +176,7 @@ export default {
   components: {
     Ehead,
     RouteBack,
-    Gap,
-    Icon,
-    Modal,
-    Input
-    // Button
+    Gap
   }
 }
 </script>

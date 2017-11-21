@@ -110,50 +110,14 @@
 
 <script type="text/ecmascript-6">
 import {mapMutations} from 'vuex'
-// import Ehead from 'base/head/head'
-// import RouteBack from 'base/back/route-back'
-// import Slider from 'base/slider/slider'
-// import AnwserCard from 'components/anwsercard/anwsercard'
-// import OptionGroup from 'components/optiongroup/optiongroup'
-// import Scroll from 'base/scroll/scroll'
+import Ehead from 'base/head/head'
+import RouteBack from 'base/back/route-back'
+import Slider from 'base/slider/slider'
+import AnwserCard from 'components/anwsercard/anwsercard'
+import OptionGroup from 'components/optiongroup/optiongroup'
+import Scroll from 'base/scroll/scroll'
 import {CountDownTimer} from 'countdown-timer-js'
-import {Button, Icon, Modal, Message} from 'iview'
-
-const Ehead = (resolve) => {
-  import('base/head/head').then((module) => {
-    resolve(module)
-  })
-}
-
-const RouteBack = (resolve) => {
-  import('base/back/route-back').then((module) => {
-    resolve(module)
-  })
-}
-
-const Slider = (resolve) => {
-  import('base/slider/slider').then((module) => {
-    resolve(module)
-  })
-}
-
-const AnwserCard = (resolve) => {
-  import('components/anwsercard/anwsercard').then((module) => {
-    resolve(module)
-  })
-}
-
-const OptionGroup = (resolve) => {
-  import('components/optiongroup/optiongroup').then((module) => {
-    resolve(module)
-  })
-}
-
-const Scroll = (resolve) => {
-  import('base/scroll/scroll').then((module) => {
-    resolve(module)
-  })
-}
+// import {Button, Icon, Modal, Message} from 'iview'
 
 export default {
   data () {
@@ -270,11 +234,7 @@ export default {
     AnwserCard,
     OptionGroup,
     Scroll,
-    Slider,
-    Modal,
-    Button,
-    Icon,
-    Message
+    Slider
   }
 }
 </script>

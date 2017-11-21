@@ -92,7 +92,6 @@
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
 import {deleteCookie} from 'common/js/cookie'
-import {Button, Icon} from 'iview'
 
 const Examlist = (resolve) => {
   import('components/examlist/examlist').then((module) => {
@@ -176,10 +175,7 @@ export default {
   components: {
     Examlist,
     RouteBack,
-    Ehead,
-    // iview components
-    Button,
-    Icon
+    Ehead
   }
 }
 </script>

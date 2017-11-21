@@ -29,13 +29,11 @@
 <script type="text/ecmascript-6">
 import Ehead from 'base/head/head'
 import RouteBack from 'base/back/route-back'
-import {Alert} from 'iview'
 
 export default {
   components: {
     Ehead,
-    RouteBack,
-    Alert
+    RouteBack
   }
 }
 </script>
